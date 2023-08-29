@@ -40,32 +40,38 @@ describe('Negative Scenarios', () => {
 
     it('should show validation for empty fields', () => {
         // attempt to log in with empty fields
-        const emptyFields = userLoginFail.empty_fields;
-        cy.usersLogin(emptyFields.username, emptyFields.password);
-        // assertion for validation button
-        cy.get('.error-button').should('be.visible'); 
-        //assertion for validation message
-        cy.contains('Username and password do not match any user in this service').should('be.visible');
-    });
-
-    it('should show validation for no Username', () => {
-        // attempt to log in with no username
-        const emptyUsername = userLoginFail.empty_username;
-        cy.usersLogin(emptyUsername.username, emptyUsername.password);
+        cy.visit('https://www.saucedemo.com/v1/');
+        cy.get('form').submit();
         // assertion for validation button
         cy.get('.error-button').should('be.visible'); 
         //assertion for validation message
         cy.contains('Username is required').should('be.visible');
     });
 
-    // it('should show validation for no Password', () => {
-    //     // attempt to log in with no password
-    //     const emptyPass = userLoginFail.empty_pass;
-    //     cy.usersLogin(emptyPass.username, emptyPass.password);
-    //     // assertion for validation button
-    //     cy.get('.error-button').should('be.visible'); 
-    //     //assertion for validation message
-    //     cy.contains('Password is required').should('be.visible');
-    // });
+    it('should show validation for no Username', () => {
+        // attempt to log in with no username
+        const emptyUsername = userLoginFail.empty_username;
+        cy.usersLogin(emptyUsername.username, emptyUsername.password);
+        //remove character on Username field
+        cy.get('[data-test=username]').type('{backspace}');
+        cy.get('form').submit()
+        // assertion for validation button
+        cy.get('.error-button').should('be.visible');
+        //assertion for validation message
+        cy.contains('Username is required').should('be.visible');
+    });
+
+    it('should show validation for no Password', () => {
+        // attempt to log in with no password
+        const emptyPass = userLoginFail.empty_pass;
+        cy.usersLogin(emptyPass.username, emptyPass.password);
+        //remove character on Password Field
+        cy.get('[data-test=password]').type('{backspace}');
+        cy.get('form').submit()
+        // assertion for validation button
+        cy.get('.error-button').should('be.visible'); 
+        //assertion for validation message
+        cy.contains('Password is required').should('be.visible');
+        });
 
 })

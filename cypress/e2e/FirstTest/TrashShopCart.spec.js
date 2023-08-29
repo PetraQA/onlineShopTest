@@ -53,29 +53,29 @@ describe('Login Test', () => {
     // Visit shopping cart
     cy.openShoppingCart();
 
-    //Verify that the shopping cart page opened
+    // Verify that the shopping cart page opened
     cy.url().should('eq','https://www.saucedemo.com/v1/cart.html');
 
-    //click on the Checkout button
+    // Click on the Checkout button
     cy.get('.btn_action').click();
 
-    //click on the Continue button
+    // Click on the Continue button
     cy.get('.btn_primary').click();
 
-    //Verify that the validation msg is showing
+    // Verify that the validation msg is showing
     cy.get('[data-test=error]').should('be.visible');
 
-    //fill in checkout data
+    // Fill in checkout data
     cy.fillCheckoutInfo();
 
-    //click on the Continue button
+    // Click on the Continue button
     cy.get('.btn_primary').click();
 
-    //click on Cancel 
+    // Click on Cancel 
     cy.get('.btn_secondary').click();
     cy.url().should('eq','https://www.saucedemo.com/v1/inventory.html');
 
-    //click on sort dropdown
+    // Click on sort dropdown
     cy.get('select[class="product_sort_container"]').select('hilo');
     // Verify that the dropdown menu is showing the selected option
     cy.get('select[class="product_sort_container"]').should('have.value', 'hilo'); // Verify the value attribute
@@ -85,7 +85,7 @@ describe('Login Test', () => {
     //cy.removeItemsOnInventoryPage();
 
     // cy.get('.btn_secondary').contains('REMOVE').then(removeButtons => {
-    //     for (let i = 0; i < removeButtons.length; i++) {
+    //    for (let i = 0; i < removeButtons.length; i++) {
     //       cy.wrap(removeButtons[i]).click();
   
     //       // Retry the assertion until it succeeds or a timeout is reached

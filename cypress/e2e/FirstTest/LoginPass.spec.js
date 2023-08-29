@@ -20,12 +20,11 @@ describe('Login and Logout Tests', () => {
          // Add assertions or navigate to other pages after successful login
          // Call the reusable logout function
          cy.logout();
-        // Assertion for successful logout
-        cy.url().should('eq', 'https://www.saucedemo.com/v1/index.html'); // Verify user is back on index page
+         // Assertion for successful logout
+         cy.url().should('eq', 'https://www.saucedemo.com/v1/index.html'); // Verify user is back on index page
         }
     }
 });
-
 
 
 })

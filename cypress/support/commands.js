@@ -33,17 +33,17 @@
 
 Cypress.Commands.add('addToCart', (itemIndex) => {
     cy.get('.inventory_item').eq(itemIndex).find('.btn_primary').click();
-  });
+});
 
 Cypress.Commands.add('openShoppingCart', () => {
     cy.get('.shopping_cart_link').click();
-  });
+});
 
 Cypress.Commands.add('logout', () => {
     cy.get('.bm-burger-button').click(); // Open the burger menu
     cy.get('.bm-item-list').contains('Logout').click(); // Click the logout option
     //cy.get('#logout_sidebar_link').click(); // Click logout link
-  });
+});
 
 Cypress.Commands.add('login', () => {
     cy.visit('https://www.saucedemo.com/v1/');
@@ -59,7 +59,7 @@ Cypress.Commands.add('usersLogin', (username, password) => {
     cy.get('[data-test=password]').type(password);
     // Click the login button
     cy.get('form').submit();
-  });
+});
 
 Cypress.Commands.add('fillCheckoutInfo', () => {
     cy.url().should('eq','https://www.saucedemo.com/v1/checkout-step-one.html');//verifiy that the user is on the chechout page
@@ -90,7 +90,7 @@ Cypress.Commands.add('removeItemsOnInventoryPage', () => {
   
     // Use a while loop with explicit retries to wait until all items are removed
     cy.get('.btn_secondary').should('not.exist', { timeout: 10000 });
-  });
+    });
   
   
   
