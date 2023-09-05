@@ -1,5 +1,5 @@
 // cypress/integration/users.login.spec.js
-const users = require('/Users/petra/Documents/CypressPM/users.json'); 
+const users = require('../mockData/users.json'); 
 
 
 describe('Login and Logout Tests', () => {

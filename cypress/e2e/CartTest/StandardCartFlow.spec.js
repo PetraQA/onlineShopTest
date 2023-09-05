@@ -1,15 +1,15 @@
 describe('Login Test', () => {
-    it('Standard user - shopping cart user flow', () => {
+  it('Standard user - shopping cart user flow', () => {
     // Visit the login page
     cy.visit('https://www.saucedemo.com/v1/');
-  
+
     // Enter username and password
     cy.get('[data-test=username]').type('standard_user');
     cy.get('[data-test=password]').type('secret_sauce');
-  
+
     // Click on the login button
     cy.get('form').submit();
-  
+
     // VERIFICATION that the login was successful
     cy.url().should('eq', 'https://www.saucedemo.com/v1/inventory.html');
 
@@ -39,8 +39,8 @@ describe('Login Test', () => {
 
     // VERIFICATION that the cart badge element does not exist
     cy.get('.shopping_cart_badge').should('not.exist');
-  
-  
+
+
   })
-  
+
 })
