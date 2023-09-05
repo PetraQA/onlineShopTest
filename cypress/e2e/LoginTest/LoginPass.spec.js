@@ -1,5 +1,5 @@
 // cypress/integration/users.login.spec.js
-const users = require('../mockData/users.json'); 
+const users = require('../mockData/users.json');
 
 
 describe('Login and Logout Tests', () => {
@@ -15,16 +15,16 @@ describe('Login and Logout Tests', () => {
   it('should log in different users and log them out', () => {
     // Log in with each user
     for (const user of Object.values(users)) {
-        if (user.username !== 'locked_out_user') {
-         cy.usersLogin(user.username, user.password);
-         // Add assertions or navigate to other pages after successful login
-         // Call the reusable logout function
-         cy.logout();
-         // Assertion for successful logout
-         cy.url().should('eq', 'https://www.saucedemo.com/v1/index.html'); // Verify user is back on index page
-        }
+      if (user.username !== 'locked_out_user') {
+        cy.usersLogin(user.username, user.password);
+        // Add assertions or navigate to other pages after successful login
+        // Call the reusable logout function
+        cy.logout();
+        // Assertion for successful logout
+        cy.url().should('eq', 'https://www.saucedemo.com/v1/index.html'); // Verify user is back on index page
+      }
     }
-});
+  });
 
 
 })
