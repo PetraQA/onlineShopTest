@@ -1,5 +1,5 @@
 // cypress/integration/users.login.spec.js
-const users = require('../mockData/users.json');
+const users = require('../../fixtures/users.json');
 
 
 describe('Login and Logout Tests', () => {

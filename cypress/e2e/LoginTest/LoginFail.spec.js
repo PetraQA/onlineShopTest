@@ -1,5 +1,5 @@
 // cypress/integration/users.negative.spec.js
-const userLoginFail = require('../mockData/userLoginFail.json'); 
+const userLoginFail = require('../../fixtures/userLoginFail.json'); 
 
 describe('Negative Scenarios', () => {
   before(() => {
