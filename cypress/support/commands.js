@@ -50,6 +50,7 @@ Cypress.Commands.add('login', () => {
     // Enter username and password
     cy.get('[data-test=username]').type('standard_user');
     cy.get('[data-test=password]').type('secret_sauce');
+    cy.get('form').submit();
 })
 
 Cypress.Commands.add('usersLogin', (username, password) => {
@@ -62,7 +63,7 @@ Cypress.Commands.add('usersLogin', (username, password) => {
 });
 
 Cypress.Commands.add('fillCheckoutInfo', () => {
-    cy.url().should('eq','https://www.saucedemo.com/v1/checkout-step-one.html');//verifiy that the user is on the chechout page
+    cy.url().should('eq', 'https://www.saucedemo.com/v1/checkout-step-one.html');//verifiy that the user is on the chechout page
     // Enter checkout INFO
     cy.get('[data-test=firstName]').type('Standard');
     cy.get('[data-test=lastName]').type('User');
@@ -70,43 +71,58 @@ Cypress.Commands.add('fillCheckoutInfo', () => {
 })
 
 //removes items from cart
+// Cypress.Commands.add('removeItemsOnInventoryPage', () => {
+//     cy.url().should('eq', 'https://www.saucedemo.com/v1/inventory.html'); // Verify that the user is on the inventory page
+
+//     function removeItems() {
+//       cy.get('.btn_secondary')
+//         .contains('REMOVE')
+//         .then(removeButtons => {
+//           if (removeButtons.length > 0) {
+//             cy.wrap(removeButtons[0]).click();
+//             cy.wait(500); // Add a small delay for DOM update
+//             removeItems(); // Recursively call removeItems function
+//           }
+//         });
+//     }
+
+//     // Start the process of removing items
+//     removeItems();
+
+//     // Use a while loop with explicit retries to wait until all items are removed
+//     cy.get('.btn_secondary').should('not.exist', { timeout: 10000 });
+//     });
+
+
 Cypress.Commands.add('removeItemsOnInventoryPage', () => {
-    cy.url().should('eq', 'https://www.saucedemo.com/v1/inventory.html'); // Verify that the user is on the inventory page
-  
     function removeItems() {
       cy.get('.btn_secondary')
-        .contains('REMOVE')
         .then(removeButtons => {
-          if (removeButtons.length > 0) {
-            cy.wrap(removeButtons[0]).click();
-            cy.wait(500); // Add a small delay for DOM update
-            removeItems(); // Recursively call removeItems function
+          const removeButton = Array.from(removeButtons).find(button => {
+            return button.textContent.trim() === 'REMOVE';
+          });
+  
+          if (removeButton) {
+            // Check if the cart badge is visible
+            cy.get('.shopping_cart_badge').then(cartBadge => {
+              if (cartBadge.is(':visible')) {
+                // Get the current count from the cart badge
+                const currentCount = parseInt(cartBadge.text().trim());
+  
+                // Click the "REMOVE" button
+                cy.wrap(removeButton).click();
+                cy.wait(500); // Add a small delay for DOM update
+  
+                // Verify that the cart badge displays a smaller count
+                cy.get('.shopping_cart_badge').should('have.text', (currentCount - 1).toString());
+              }
+            });
+  
+            // Recursively call removeItems function
+            removeItems();
           }
         });
     }
   
-    // Start the process of removing items
-    removeItems();
-  
-    // Use a while loop with explicit retries to wait until all items are removed
-    cy.get('.btn_secondary').should('not.exist', { timeout: 10000 });
-    });
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+    removeItems(); // Start the removal process
+  });
