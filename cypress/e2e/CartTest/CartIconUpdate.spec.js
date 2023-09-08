@@ -1,33 +1,42 @@
 ///<reference types = "cypress"/>
 
 describe('Shopping Cart Icon Update', () => {
-  it('should reflect the correct item count in the cart badge', () => {
-
+  beforeEach(() => {
     // Step 1: Log in with a standard user
     cy.login();
 
-    // Step 2: Submit the login form
-    cy.get('form').submit();
-
-    // Step 3: Verify successful login by checking the URL
+    // Step 2: Verify successful login by checking the URL
     cy.url().should('eq', 'https://www.saucedemo.com/v1/inventory.html');
+  });
 
-    // Step 4: Add the first item to the cart
-    cy.addToCart(1);
+  it('should add and remove items and update the cart badge', () => {
+    // Initialize cart badge count
+    let cartBadgeCount = 0;
 
-    // Step 5: Verify that the cart badge displays '1'
-    cy.get('.shopping_cart_badge').should('have.text', '1');
+    // Add items one by one and check cart badge
+    for (let itemIndex = 0; itemIndex < 6; itemIndex++) {
+      // Increase the cart badge count before adding an item
+      cartBadgeCount++;
+      cy.addToCart(itemIndex);
 
-    // Step 6: Add another item to the cart
-    cy.addToCart(4);
+      // Verify that the cart badge displays the updated count
+      cy.get('.shopping_cart_badge').should('have.text', String(cartBadgeCount));
+    }
 
-    // Step 7: Verify that the cart badge updates to '2'
-    cy.get('.shopping_cart_badge').should('have.text', '2');
+    // Remove all items one by one and check cart badge
+    for (let itemIndex = 5; itemIndex >= 0; itemIndex--) {
+      // Decrease the cart badge count before removing an item
+      cartBadgeCount--;
+      cy.removeFromCart(itemIndex);
 
-    // Step 8: Remove items from the cart if needed
-    // cy.removeItemsOnInventoryPage();
-
-    // Step 9: Verify that the cart is empty (no badge)
-    // cy.get('.shopping_cart_badge').should('not.exist');
+      // If itemIndex is 0, verify that the cart badge disappears
+      if (itemIndex === 0) {
+        cy.get('.shopping_cart_badge').should('not.exist');
+      } else {
+        // Verify that the cart badge displays the updated count
+        cy.get('.shopping_cart_badge').should('have.text', String(cartBadgeCount));
+      }
+    }
   });
 });
+
