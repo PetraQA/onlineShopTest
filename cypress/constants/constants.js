@@ -1,7 +1,10 @@
 
 export const pageURLs = {
-  logingPage: 'https://www.saucedemo.com/v1/.html',
-  inventoryPage: 'https://www.saucedemo.com/v1/inventory.html'
+  loginPage: 'https://www.saucedemo.com/v1/.html',
+  inventoryPage: 'https://www.saucedemo.com/v1/inventory.html',
+  cartPage: 'https://www.saucedemo.com/v1/cart.html',
+  checkoutPageOne: 'https://www.saucedemo.com/v1/checkout-step-one.html',
+  checkoutPageTwo: 'https://www.saucedemo.com/v1/checkout-step-two.html'
 };
 export const productNames = {
   hilo: 'Sauce Labs Fleece Jacket',
