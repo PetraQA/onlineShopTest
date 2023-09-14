@@ -1,14 +1,17 @@
-import { pageURLs } from '../../constants/constants.js';
+import { pageURLs, addItemsToCart } from '../../constants/constants.js';
 
 describe('Shopping Test', () => {
   it('Standard user - shopping cart user flow', () => {
     // Log in with a standard user and verify the successful login
     cy.login().url().should('eq', pageURLs.inventoryPage);
 
-    // Add items to the shopping cart and verify the cart badge count
-    cy.addToCart(1);
-    cy.addToCart(2);
-    cy.get('.shopping_cart_badge').should('have.text', '2').click();
+    // Add items to the shopping cart based on the addToCart constant
+    addItemsToCart.forEach((itemNumber) => {
+      cy.addToCart(itemNumber);
+    });
+
+    // Verify that the cart badge count matches the number of items added
+    cy.get('.shopping_cart_badge').should('have.text', addItemsToCart.length.toString()).click();
 
     // Verify that the user is on the Cart Page and proceed to Checkout
     cy.url().should('eq', pageURLs.cartPage);
@@ -44,6 +47,9 @@ describe('Shopping Test', () => {
 
     // Complete the checkout
     cy.get('.cart_button').click();
+
+    // Verify that the user is on the checkout complete page
+    cy.url().should('eq', pageURLs.checkoutComplete);
 
     // Verify that the cart badge element does not exist
     cy.get('.shopping_cart_badge').should('not.exist');
